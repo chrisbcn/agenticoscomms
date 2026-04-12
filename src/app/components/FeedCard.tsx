@@ -20,14 +20,11 @@ export default function FeedCard({ item, onClick, delay = 0 }: FeedCardProps) {
         <img
           src={item.image}
           alt={item.brandName}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
       </div>
-      <div className="flex items-start gap-2 px-4">
-        <div
-          className="w-[34px] h-[34px] rounded-full overflow-hidden border border-[rgba(0,0,0,0.12)]"
-          style={{ backgroundColor: item.backgroundColor || "#fff" }}
-        >
+      <div className="flex items-center gap-2 px-4">
+        <div className="w-[34px] h-[34px] rounded-full overflow-hidden border border-[rgba(0,0,0,0.12)] flex-shrink-0">
           <img
             src={item.brandLogo}
             alt={item.brandName}

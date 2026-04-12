@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import FeedCard from "../components/FeedCard";
 import BrandLogos from "../components/BrandLogos";
 import { feedItems } from "../data/feedItems";
-import svgPaths from "../../imports/Graphic-1/svg-c3ovxrd9pu";
+import MauraLogo from "../components/MauraLogo";
 
 let isInitialLoad = true;
 
@@ -52,15 +52,7 @@ export default function DiscoverFeed() {
           transition={{ duration: 0.5, delay: 0.9 + (feedItems.length * 0.25) }}
         >
           <p className="text-[#585858] text-[8.56px] font-normal leading-[1.2]">POWERED BY</p>
-          <div className="w-[64px] h-[8.56px]">
-            <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 64.1307 8.56158">
-              <path d={svgPaths.p321b4f80} fill="#1E1E1E" />
-              <path d={svgPaths.p30751400} fill="#1E1E1E" />
-              <path d={svgPaths.p28eb2180} fill="#1E1E1E" />
-              <path d={svgPaths.p3d984980} fill="#1E1E1E" />
-              <path d={svgPaths.p3f97e600} fill="#1E1E1E" />
-            </svg>
-          </div>
+          <MauraLogo />
         </motion.div>
       </div>
     </motion.div>

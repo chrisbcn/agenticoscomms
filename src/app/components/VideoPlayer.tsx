@@ -11,6 +11,14 @@ interface VideoPlayerProps {
 export default function VideoPlayer({ src, poster, className = "", muted = true }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // React doesn't properly apply the `muted` attribute to video elements (known bug).
+  // We must set it via the DOM ref to ensure Chrome's autoplay policy is satisfied.
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+    }
+  }, []);
+
   // Play immediately if it's rendered, sometimes mobile browsers need an explicit play call
   useEffect(() => {
     if (videoRef.current && src) {
@@ -25,7 +33,7 @@ export default function VideoPlayer({ src, poster, className = "", muted = true 
         {poster && (
           <img 
             src={poster} 
-            className="absolute inset-0 w-full h-full object-cover opacity-60 blur-md scale-110" 
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-60 blur-md scale-110" 
             alt="Video poster fallback" 
           />
         )}
