@@ -115,33 +115,45 @@ export function VoiceButton({ onClick, active = false, className = "" }: { onCli
       className={`-translate-x-1/2 absolute z-10 ${className}`}
       style={{ left: "calc(50% + 6px)", top: 936, width: 72, height: 72 }}
     >
-      {/* Pulsing ring while listening */}
-      {listening && (
-        <motion.div
-          className="absolute inset-0 rounded-full pointer-events-none"
-          style={{ border: "2.5px solid rgba(180,100,220,0.6)" }}
-          animate={{ scale: [1, 1.55], opacity: [0.8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.1, ease: "easeOut" }}
-        />
-      )}
-      {/* Processing dots ring */}
-      {processing && (
-        <motion.div
-          className="absolute rounded-full pointer-events-none"
-          style={{ inset: -6, border: "2px solid rgba(180,100,220,0.35)" }}
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1.4, ease: "linear" }}
-        />
+      {/* Rainbow spinning shadow — visible while listening or processing */}
+      {(listening || processing) && (
+        <>
+          {/* Spinning rainbow layer */}
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: "85%",
+              height: "85%",
+              left: "7.5%",
+              top: "7.5%",
+              background: "conic-gradient(from 0deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)",
+              filter: "blur(12px)",
+              opacity: 0.6,
+            }}
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+          />
+          {/* Outer pulse ring to amplify the glow */}
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              inset: -8,
+              background: "conic-gradient(from 0deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000)",
+              filter: "blur(16px)",
+              opacity: 0.3,
+            }}
+            animate={{ rotate: -360 }}
+            transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
+          />
+        </>
       )}
       <button
         onClick={handleClick}
         className="absolute inset-0 overflow-clip rounded-full"
         style={{
           background: "white",
-          border: (active || listening) ? "6px solid rgba(205,133,219,0.7)" : "none",
-          boxShadow: (active || listening)
-            ? "0px 1.8px 5.4px 0px rgba(154,159,222,0.05), 0px -3.6px 5.4px 0px rgba(154,159,222,0.05)"
-            : "none",
+          zIndex: 1,
+          position: "relative",
         }}
       >
         <img
