@@ -11,16 +11,27 @@ export interface SpeechResult {
   reset: () => void;
 }
 
+// How long after the last speech result to auto-stop (ms)
+const SILENCE_TIMEOUT = 1800;
+
 export function useSpeech(): SpeechResult {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [interim, setInterim] = useState("");
   const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const supported =
     typeof window !== "undefined" &&
     ("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
+
+  const clearSilenceTimer = () => {
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
+    }
+  };
 
   const start = useCallback(() => {
     if (!supported) return;
@@ -44,15 +55,23 @@ export function useSpeech(): SpeechResult {
       }
       if (finalText) setTranscript((prev) => prev + finalText);
       setInterim(interimText);
+
+      // Reset silence timer on every new speech event
+      clearSilenceTimer();
+      silenceTimerRef.current = setTimeout(() => {
+        recognition.stop();
+      }, SILENCE_TIMEOUT);
     };
 
     recognition.onerror = (event: any) => {
+      clearSilenceTimer();
       if (event.error !== "aborted") setError(event.error);
       setIsListening(false);
       setInterim("");
     };
 
     recognition.onend = () => {
+      clearSilenceTimer();
       setIsListening(false);
       setInterim("");
     };
@@ -66,6 +85,7 @@ export function useSpeech(): SpeechResult {
   }, [supported]);
 
   const stop = useCallback(() => {
+    clearSilenceTimer();
     recognitionRef.current?.stop();
     setIsListening(false);
   }, []);
@@ -77,7 +97,10 @@ export function useSpeech(): SpeechResult {
   }, []);
 
   useEffect(() => {
-    return () => recognitionRef.current?.stop();
+    return () => {
+      clearSilenceTimer();
+      recognitionRef.current?.stop();
+    };
   }, []);
 
   return { isListening, transcript, interim, supported, error, start, stop, reset };
