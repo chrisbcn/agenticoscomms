@@ -73,7 +73,7 @@ export default function Screen04_RestaurantRec() {
         </div>
       </div>
 
-      <VoiceButton active onClick={() => navigate("/agentic/booking")} demoText="Find us a nice restaurant for dinner tonight with the family" />
+      <VoiceButton active onClick={() => navigate("/agentic/booking")} demoText="Can you find a cozy, warm restaurant for dinner with Mom and Aaron on Sunday? Something quiet, easy to get to, not too far for either of us." />
     </div>
   );
 }
