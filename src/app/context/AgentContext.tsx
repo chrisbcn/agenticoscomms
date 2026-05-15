@@ -126,7 +126,11 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
     callClaude(locationRef.current, spoken)
       .then(({ reply, navigateTo }) => {
         if (reply) setAgentReply(reply);
-        if (navigateTo) navigate(navigateTo);
+        // If Claude returns the current screen (or nothing), advance via story fallback
+        const dest = (navigateTo && navigateTo !== locationRef.current)
+          ? navigateTo
+          : STORY_NEXT[locationRef.current];
+        if (dest) navigate(dest);
       })
       .catch((err) => {
         console.error("Maura AI error:", err);
