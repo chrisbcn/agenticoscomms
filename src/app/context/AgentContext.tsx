@@ -7,8 +7,10 @@ interface AgentContextValue {
   isProcessing: boolean;
   transcript: string;
   interim: string;
+  liveText: string;
   agentReply: string;
   toggleListening: () => void;
+  runDemo: (text: string) => void;
   error: string | null;
   supported: boolean;
 }
@@ -101,18 +103,42 @@ async function callClaude(currentPath: string, spokenText: string): Promise<{ re
   return JSON.parse(cleaned);
 }
 
+const TYPEWRITER_SPEED = 38; // ms per character
+
 export function AgentProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
   const speech = useSpeech();
   const [isProcessing, setIsProcessing] = useState(false);
   const [agentReply, setAgentReply] = useState("");
+  const [demoTranscript, setDemoTranscript] = useState("");
+  const [isDemoRunning, setIsDemoRunning] = useState(false);
   const wasListeningRef = useRef(false);
   const locationRef = useRef(location.pathname);
+  const demoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     locationRef.current = location.pathname;
   }, [location.pathname]);
+
+  const processSpoken = useCallback((spoken: string) => {
+    setIsProcessing(true);
+    callClaude(locationRef.current, spoken)
+      .then(({ reply, navigateTo }) => {
+        if (reply) setAgentReply(reply);
+        if (navigateTo) navigate(navigateTo);
+      })
+      .catch((err) => {
+        console.error("Maura AI error:", err);
+        const fallback = STORY_NEXT[locationRef.current];
+        if (fallback) navigate(fallback);
+      })
+      .finally(() => {
+        setIsProcessing(false);
+        setDemoTranscript("");
+        speech.reset();
+      });
+  }, [navigate, speech.reset]);
 
   // Detect transition from listening → stopped and process if we have speech
   useEffect(() => {
@@ -120,23 +146,7 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
     wasListeningRef.current = speech.isListening;
 
     if (wasListening && !speech.isListening && speech.transcript.trim()) {
-      const spoken = speech.transcript.trim();
-      setIsProcessing(true);
-      callClaude(locationRef.current, spoken)
-        .then(({ reply, navigateTo }) => {
-          if (reply) setAgentReply(reply);
-          if (navigateTo) navigate(navigateTo);
-        })
-        .catch((err) => {
-          console.error("Maura AI error:", err);
-          // Fallback: advance linearly through the story
-          const fallback = STORY_NEXT[locationRef.current];
-          if (fallback) navigate(fallback);
-        })
-        .finally(() => {
-          setIsProcessing(false);
-          speech.reset();
-        });
+      processSpoken(speech.transcript.trim());
     }
   }, [speech.isListening]);
 
@@ -166,15 +176,48 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
     else speech.start();
   }, [speech.isListening, speech.start, speech.stop]);
 
+  // Double-click demo: typewriter the scripted text then process it as if spoken
+  const runDemo = useCallback((text: string) => {
+    if (isDemoRunning || isProcessing) return;
+    setDemoTranscript("");
+    setIsDemoRunning(true);
+
+    let i = 0;
+    const tick = () => {
+      i++;
+      setDemoTranscript(text.slice(0, i));
+      if (i < text.length) {
+        demoTimerRef.current = setTimeout(tick, TYPEWRITER_SPEED);
+      } else {
+        // Typewriter done — pause briefly then send to Claude
+        demoTimerRef.current = setTimeout(() => {
+          setIsDemoRunning(false);
+          processSpoken(text);
+        }, 600);
+      }
+    };
+    demoTimerRef.current = setTimeout(tick, TYPEWRITER_SPEED);
+  }, [isDemoRunning, isProcessing, processSpoken]);
+
+  useEffect(() => {
+    return () => {
+      if (demoTimerRef.current) clearTimeout(demoTimerRef.current);
+    };
+  }, []);
+
+  const liveText = demoTranscript || speech.interim || speech.transcript;
+
   return (
     <AgentContext.Provider
       value={{
-        isListening: speech.isListening,
+        isListening: speech.isListening || isDemoRunning,
         isProcessing,
         transcript: speech.transcript,
         interim: speech.interim,
+        liveText,
         agentReply,
         toggleListening,
+        runDemo,
         error: speech.error,
         supported: speech.supported,
       }}

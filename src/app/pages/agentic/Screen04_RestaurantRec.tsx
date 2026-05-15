@@ -14,7 +14,7 @@ export default function Screen04_RestaurantRec() {
   const navigate = useNavigate();
   const agent = useAgent();
 
-  const liveText = agent.interim || agent.transcript;
+  const liveText = agent.liveText;
 
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
@@ -73,7 +73,7 @@ export default function Screen04_RestaurantRec() {
         </div>
       </div>
 
-      <VoiceButton active onClick={() => navigate("/agentic/booking")} />
+      <VoiceButton active onClick={() => navigate("/agentic/booking")} demoText="Find us a nice restaurant for dinner tonight with the family" />
     </div>
   );
 }

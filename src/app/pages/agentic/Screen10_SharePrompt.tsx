@@ -19,7 +19,7 @@ export default function Screen10_SharePrompt() {
   const navigate = useNavigate();
   const agent = useAgent();
 
-  const liveText = agent.interim || agent.transcript;
+  const liveText = agent.liveText;
 
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
@@ -111,7 +111,7 @@ export default function Screen10_SharePrompt() {
         </div>
       </div>
 
-      <VoiceButton active onClick={() => navigate("/agentic/finale")} />
+      <VoiceButton active onClick={() => navigate("/agentic/finale")} demoText="Share these photos to Mom and Aaron with a warm message" />
     </div>
   );
 }

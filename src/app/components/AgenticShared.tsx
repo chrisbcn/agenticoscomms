@@ -1,4 +1,5 @@
 // Shared assets and components used across the Agentic OS screens
+import { useRef } from "react";
 import { motion } from "motion/react";
 import { useAgent } from "../context/AgentContext";
 
@@ -99,12 +100,22 @@ export function ClockDisplay({ hours, minutes, date }: { hours: string; minutes:
 }
 
 // Voice button — centered near bottom, use on every screen
-export function VoiceButton({ onClick, active = false, className = "" }: { onClick?: () => void; active?: boolean; className?: string }) {
+export function VoiceButton({ onClick, active = false, className = "", demoText }: { onClick?: () => void; active?: boolean; className?: string; demoText?: string }) {
   const agent = useAgent();
   const listening = agent.isListening;
   const processing = agent.isProcessing;
+  const lastClickRef = useRef(0);
 
   const handleClick = () => {
+    const now = Date.now();
+    const isDouble = now - lastClickRef.current < 350;
+    lastClickRef.current = now;
+
+    if (isDouble && demoText) {
+      agent.runDemo(demoText);
+      return;
+    }
+
     agent.toggleListening();
     // onClick kept as fallback when speech not supported
     if (!agent.supported) onClick?.();
