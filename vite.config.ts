@@ -4,6 +4,46 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import type { Connect } from 'vite'
 
+// Proxy /api/chat → Anthropic API. API key stays in Node, never reaches the browser.
+function claudeProxyPlugin() {
+  return {
+    name: 'claude-proxy',
+    configureServer(server: { middlewares: Connect.Server }) {
+      server.middlewares.use('/api/chat', (req: any, res: any) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405
+          res.end('Method Not Allowed')
+          return
+        }
+        let body = ''
+        req.on('data', (chunk: Buffer) => { body += chunk.toString() })
+        req.on('end', async () => {
+          try {
+            const apiKey = process.env.ANTHROPIC_API_KEY ?? ''
+            const upstream = await fetch('https://api.anthropic.com/v1/messages', {
+              method: 'POST',
+              headers: {
+                'x-api-key': apiKey,
+                'anthropic-version': '2023-06-01',
+                'content-type': 'application/json',
+              },
+              body,
+            })
+            const data = await upstream.json()
+            res.setHeader('content-type', 'application/json')
+            res.statusCode = upstream.status
+            res.end(JSON.stringify(data))
+          } catch (err) {
+            console.error('[claude-proxy]', err)
+            res.statusCode = 500
+            res.end(JSON.stringify({ error: 'Proxy error' }))
+          }
+        })
+      })
+    },
+  }
+}
+
 // Middleware to handle HEAD requests for static files (Vite dev server returns 503 for HEAD by default)
 function headRequestPlugin() {
   return {
@@ -34,6 +74,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     headRequestPlugin(),
+    claudeProxyPlugin(),
   ],
   resolve: {
     alias: {

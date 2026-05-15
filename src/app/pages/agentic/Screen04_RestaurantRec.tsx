@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { VoiceButton } from "../../components/AgenticShared";
+import { useAgent } from "../../context/AgentContext";
 
 const imgBgOuter = "/agentic-assets/284a94f7cf61bfdbb9bfceebbc6f727384c44aea.png";
 const imgBgInner = "/agentic-assets/8e23fc692b553096ca4782f38eaa7321e20cdc86.png";
@@ -19,6 +20,7 @@ const TRANSCRIPT_PAUSE = 500; // pause after "How can I help?" finishes
 
 export default function Screen04_RestaurantRec() {
   const navigate = useNavigate();
+  const agent = useAgent();
   const [helpTyped, setHelpTyped] = useState(0);
   const [charsTyped, setCharsTyped] = useState(0);
   const [transcriptStarted, setTranscriptStarted] = useState(false);
@@ -44,9 +46,13 @@ export default function Screen04_RestaurantRec() {
     return () => clearTimeout(t);
   }, [transcriptStarted, charsTyped]);
 
+  // Live speech overrides the typewriter animation
+  const liveText = agent.interim || agent.transcript;
+  const showLive = agent.isListening || agent.isProcessing || Boolean(agent.transcript);
+
   const typed = FULL_TEXT.slice(0, charsTyped);
-  const blackVisible = typed.slice(0, BLACK_TEXT.length);
-  const grayVisible = typed.length > BLACK_TEXT.length ? typed.slice(BLACK_TEXT.length) : "";
+  const blackVisible = showLive ? liveText : typed.slice(0, BLACK_TEXT.length);
+  const grayVisible = showLive ? "" : (typed.length > BLACK_TEXT.length ? typed.slice(BLACK_TEXT.length) : "");
 
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">

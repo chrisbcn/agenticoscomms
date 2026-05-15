@@ -4,3 +4,6 @@ dist/
 .claude/
 package-lock.json
 *.zip
+
+.env
+.env.local

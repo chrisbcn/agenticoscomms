@@ -1,4 +1,6 @@
 // Shared assets and components used across the Agentic OS screens
+import { motion } from "motion/react";
+import { useAgent } from "../context/AgentContext";
 
 export const ASSETS = {
   // Backgrounds
@@ -98,26 +100,57 @@ export function ClockDisplay({ hours, minutes, date }: { hours: string; minutes:
 
 // Voice button — centered near bottom, use on every screen
 export function VoiceButton({ onClick, active = false, className = "" }: { onClick?: () => void; active?: boolean; className?: string }) {
+  const agent = useAgent();
+  const listening = agent.isListening;
+  const processing = agent.isProcessing;
+
+  const handleClick = () => {
+    agent.toggleListening();
+    // onClick kept as fallback when speech not supported
+    if (!agent.supported) onClick?.();
+  };
+
   return (
-    <button
-      onClick={onClick}
-      className={`-translate-x-1/2 absolute overflow-clip rounded-full size-[72px] z-10 ${className}`}
-      style={{
-        left: "calc(50% + 6px)",
-        top: 936,
-        background: "white",
-        border: active ? "6px solid rgba(205,133,219,0.7)" : "none",
-        boxShadow: active
-          ? "0px 1.8px 5.4px 0px rgba(154,159,222,0.05), 0px -3.6px 5.4px 0px rgba(154,159,222,0.05)"
-          : "none",
-      }}
+    <div
+      className={`-translate-x-1/2 absolute z-10 ${className}`}
+      style={{ left: "calc(50% + 6px)", top: 936, width: 72, height: 72 }}
     >
-      <img
-        src={ASSETS.voiceDefault}
-        alt="Voice"
-        className="absolute inset-0 size-full object-cover pointer-events-none"
-      />
-    </button>
+      {/* Pulsing ring while listening */}
+      {listening && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{ border: "2.5px solid rgba(180,100,220,0.6)" }}
+          animate={{ scale: [1, 1.55], opacity: [0.8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.1, ease: "easeOut" }}
+        />
+      )}
+      {/* Processing dots ring */}
+      {processing && (
+        <motion.div
+          className="absolute rounded-full pointer-events-none"
+          style={{ inset: -6, border: "2px solid rgba(180,100,220,0.35)" }}
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1.4, ease: "linear" }}
+        />
+      )}
+      <button
+        onClick={handleClick}
+        className="absolute inset-0 overflow-clip rounded-full"
+        style={{
+          background: "white",
+          border: (active || listening) ? "6px solid rgba(205,133,219,0.7)" : "none",
+          boxShadow: (active || listening)
+            ? "0px 1.8px 5.4px 0px rgba(154,159,222,0.05), 0px -3.6px 5.4px 0px rgba(154,159,222,0.05)"
+            : "none",
+        }}
+      >
+        <img
+          src={ASSETS.voiceDefault}
+          alt="Voice"
+          className="absolute inset-0 size-full object-cover pointer-events-none"
+        />
+      </button>
+    </div>
   );
 }
 
