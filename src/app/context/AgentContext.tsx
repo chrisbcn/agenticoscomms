@@ -39,9 +39,11 @@ Available screens (routes):
 - /agentic/restaurant → user asking for a restaurant recommendation
 - /agentic/booking → Maura showing Tasca restaurant (first option, "Recommended", 6:30pm)
 - /agentic/booking-alt → Maura showing Olea restaurant (second option, "Near to you", 7:00pm)
-- /agentic/messages → booking confirmed, family message thread preview
-- /agentic/waymo → Waymo ride booked confirmation
-- /agentic/tracking → Waymo car is en route (10 min away)
+- /agentic/messages → booking confirmed, reservation card with drafted message + Send/Edit buttons
+- /agentic/messages-aaron → Aaron's reply "Works for me!"
+- /agentic/messages-mom → Mom's reply "Yes! Love that place 😊" + Aaron's reply stacked
+- /agentic/waymo → Waymo ride booked, "Your reservation is in an hour", FARE/PICKUP/DROP-OFF
+- /agentic/tracking → Waymo car is en route, "10 minutes", live map with radar
 - /agentic/photos → Live top-down Waymo tracking, heading to dinner
 - /agentic/finale → After dinner — "From last night" photos with share option
 - /agentic/share → User editing/speaking the message to send with photos
@@ -51,7 +53,8 @@ Intent → route mapping:
 - Show Tasca / first option / recommended option → /agentic/booking
 - Show another option / different restaurant / Olea / near to you → /agentic/booking-alt
 - Confirming booking / yes book it / book Tasca / book Olea → /agentic/messages
-- Family messages / text mom / group chat → /agentic/messages
+- Send message / send it / confirm plans → /agentic/messages-aaron
+- Family messages / text mom / group chat / everyone's in → /agentic/messages-mom
 - Book a ride / Waymo / transportation / car → /agentic/waymo
 - Track the car / where is the Waymo / ETA → /agentic/tracking
 - On the way / heading to dinner / in the car → /agentic/photos
@@ -72,7 +75,9 @@ const STORY_NEXT: Record<string, string> = {
   "/agentic/restaurant": "/agentic/booking",
   "/agentic/booking": "/agentic/messages",
   "/agentic/booking-alt": "/agentic/messages",
-  "/agentic/messages": "/agentic/waymo",
+  "/agentic/messages": "/agentic/messages-aaron",
+  "/agentic/messages-aaron": "/agentic/messages-mom",
+  "/agentic/messages-mom": "/agentic/waymo",
   "/agentic/waymo": "/agentic/tracking",
   "/agentic/tracking": "/agentic/photos",
   "/agentic/photos": "/agentic/finale",
@@ -116,6 +121,7 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
   const wasListeningRef = useRef(false);
   const locationRef = useRef(location.pathname);
   const demoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const processingStartRef = useRef(0);
 
   useEffect(() => {
     locationRef.current = location.pathname;
@@ -123,19 +129,37 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
 
   const processSpoken = useCallback((spoken: string) => {
     setIsProcessing(true);
-    callClaude(locationRef.current, spoken)
+    const fromPath = locationRef.current;
+    processingStartRef.current = Date.now();
+
+    // Show the processing/thinking screen only on specific transitions
+    const showProcessing = ["/agentic", "/agentic/greeting", "/agentic/booking", "/agentic/messages"].includes(fromPath);
+    if (showProcessing) navigate("/agentic/processing");
+
+    callClaude(fromPath, spoken)
       .then(({ reply, navigateTo }) => {
         if (reply) setAgentReply(reply);
-        // If Claude returns the current screen (or nothing), advance via story fallback
-        const dest = (navigateTo && navigateTo !== locationRef.current)
+        const dest = (navigateTo && navigateTo !== fromPath)
           ? navigateTo
-          : STORY_NEXT[locationRef.current];
-        if (dest) navigate(dest);
+          : STORY_NEXT[fromPath];
+        if (showProcessing) {
+          const elapsed = Date.now() - processingStartRef.current;
+          const delay = Math.max(0, 2000 - elapsed);
+          setTimeout(() => { if (dest) navigate(dest); }, delay);
+        } else {
+          if (dest) navigate(dest);
+        }
       })
       .catch((err) => {
         console.error("Maura AI error:", err);
-        const fallback = STORY_NEXT[locationRef.current];
-        if (fallback) navigate(fallback);
+        const fallback = STORY_NEXT[fromPath];
+        if (showProcessing) {
+          const elapsed = Date.now() - processingStartRef.current;
+          const delay = Math.max(0, 2000 - elapsed);
+          setTimeout(() => { if (fallback) navigate(fallback); }, delay);
+        } else {
+          if (fallback) navigate(fallback);
+        }
       })
       .finally(() => {
         setIsProcessing(false);

@@ -5,9 +5,9 @@ import { useAgent } from "../../context/AgentContext";
 
 const imgBgOuter = "/agentic-assets/284a94f7cf61bfdbb9bfceebbc6f727384c44aea.png";
 const imgBgInner = "/agentic-assets/8e23fc692b553096ca4782f38eaa7321e20cdc86.png";
-const imgMom = "/agentic-assets/58ce9b58c093882775509f5a54f680857549b19f.png";
-const imgUser = "/agentic-assets/f47d24f1011002db3657c4ebc0ad4b61adbac0cc.png";
-const imgAaron = "/agentic-assets/dfd1786f5e5a8052a4fb42be2ba5b470db4b021b.png";
+const imgMom = "/agentic-assets/dfd1786f5e5a8052a4fb42be2ba5b470db4b021b.png";
+const imgUser = "/agentic-assets/58ce9b58c093882775509f5a54f680857549b19f.png";
+const imgAaron = "/agentic-assets/f47d24f1011002db3657c4ebc0ad4b61adbac0cc.png";
 const imgMic = "/agentic-assets/6672c983de5a780011f8d6a9ff244867b2a9aaa1.svg";
 const imgFrame501 = "/agentic-assets/6ae4b142ab8951f8a345ac1e8725a1fa929d9ad1.png";
 const imgFrame502 = "/agentic-assets/257f178049721907e7434a1524818ac674d164d7.png";

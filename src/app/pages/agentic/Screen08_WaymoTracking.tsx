@@ -1,131 +1,113 @@
-import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBg = "/agentic-assets/be22207c5b81f3ba4c374f3f73b8a7f9cd70b3cc.png";
-const imgClockTexture = "/agentic-assets/66d7f2a78e502db6ab429f4d52c6cd398d6d9291.png";
 const imgGlassTexture = "/agentic-assets/552ea12888d2f3fc11c5468aa567db6c7535068d.png";
-const imgWaymoCar = "/agentic-assets/155ae683fcc0fa0c21233166ea3175eaf7a14d6b.png";
-const imgLine = "/agentic-assets/0d814fe01fe073cf523da305ff2d164b77507f44.svg";
+const imgMap = "/agentic-assets/954aefce163e793963ad259506c99c23ed16d316.png";
+const imgCar = "/agentic-assets/a24853e15e70a30eae08fd40af64d4f650c24299.png";
+const imgEllipse1 = "/agentic-assets/103acd76be466e4dbf084e168e9641d671ea3a41.svg";
+const imgEllipse2 = "/agentic-assets/8f1a4b7878212e9f4227d59a0f6433776a0d96e8.svg";
+const imgEllipse3 = "/agentic-assets/985fd62ea75df3764eda05cd6cade38db798d8ee.svg";
+const imgEllipse4 = "/agentic-assets/03007465fccf62848dc467a6992e89b22688bf3d.svg";
+const imgLine = "/agentic-assets/a46def1ef732092951dddb15c59225bbe69973eb.svg";
 
 export default function Screen08_WaymoTracking() {
-  const navigate = useNavigate();
-
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
-      {/* Background photo */}
+      {/* Background */}
       <div className="absolute h-[1040px] left-0 top-0 w-[480px]">
-        <img
-          alt=""
-          className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full"
-          src={imgBg}
-        />
+        <img alt="" className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full" src={imgBg} />
       </div>
 
-      {/* Decorative blob */}
-      <div
-        className="absolute flex h-[512px] items-center justify-center left-[240px] top-[-124px] w-[491px]"
-        style={{ mixBlendMode: "hard-light" }}
+      {/* Clock "05" — gradient purple→coral */}
+      <p
+        className="absolute left-[24px] top-[60px] text-[80px] whitespace-nowrap select-none"
+        style={{
+          fontFamily: "'One UI Sans APP VF', system-ui, sans-serif",
+          fontWeight: 300,
+          lineHeight: 0.9,
+          background: "linear-gradient(to bottom, #a78bcf, #de7a63)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
       >
-        <div className="flex-none rotate-180">
-          <div
-            className="h-[512px] relative rounded-bl-[300px] rounded-br-[800px] rounded-tl-[100px] rounded-tr-[800px] w-[491px]"
-          >
+        05
+      </p>
+
+      {/* Clock "50" */}
+      <p
+        className="absolute left-[24px] top-[132px] text-[80px] whitespace-nowrap select-none"
+        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9, color: "#de7a63" }}
+      >
+        50
+      </p>
+
+      {/* Date */}
+      <p
+        className="absolute left-[24px] top-[204px] text-[18px] whitespace-nowrap select-none"
+        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1, color: "#d14a41" }}
+      >
+        Sunday, May 10
+      </p>
+
+      {/* Ellipse 3 — soft pulse behind car, centered on car */}
+      <motion.div
+        className="absolute"
+        style={{ left: 267, top: 97, width: 205, height: 205 }}
+        animate={{ opacity: [0.6, 1, 0.6], scale: [0.95, 1.03, 0.95] }}
+        transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+      >
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse3} />
+      </motion.div>
+
+      {/* Ellipse 4 — inner pulse, centered on car */}
+      <motion.div
+        className="absolute"
+        style={{ left: 284, top: 114, width: 170, height: 170 }}
+        animate={{ opacity: [0.7, 1, 0.7], scale: [0.96, 1.02, 0.96] }}
+        transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut", delay: 0.3 }}
+      >
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse4} />
+      </motion.div>
+
+      {/* Car — rotated 90° to face up, 80% of Figma size */}
+      <div
+        className="absolute flex items-center justify-center"
+        style={{ right: 45, top: 60, width: 132, height: 279 }}
+      >
+        <div style={{ transform: "rotate(90deg)", width: 279, height: 132, position: "relative", flexShrink: 0 }}>
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <img
               alt=""
-              className="absolute inset-0 max-w-none object-bottom opacity-25 pointer-events-none rounded-bl-[300px] rounded-br-[800px] rounded-tl-[100px] rounded-tr-[800px] size-full"
-              src={imgGlassTexture}
+              className="absolute max-w-none"
+              style={{ height: "127.48%", left: "-3.35%", top: "-14.16%", width: "107.1%" }}
+              src={imgCar}
             />
           </div>
         </div>
       </div>
 
-      {/* Waymo car image — slides in from right */}
-      <motion.div
-        className="absolute h-[270px] left-[188px] top-[90px] w-[448px]"
-        initial={{ x: 320 }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img
-            alt=""
-            className="absolute h-[150.53%] left-[-31.53%] max-w-none top-[-25.26%] w-[163.06%]"
-            src={imgWaymoCar}
-          />
-        </div>
-      </motion.div>
-
-      {/* Clock texture */}
+      {/* "10 minutes" + subtitle */}
       <div
-        className="absolute pointer-events-none overflow-hidden"
-        style={{ left: 24, top: 60, width: "89.061px", height: "58.96px" }}
+        className="absolute flex flex-col gap-[8px] items-start left-[24px]"
+        style={{ top: 309, lineHeight: 1.2 }}
       >
-        <div
-          className="absolute"
-          style={{
-            left: 836.646 - 808.97 + "px",
-            top: 1656.08 - 1590 + "px",
-            width: "1929.931px",
-            height: "2826.621px",
-          }}
+        <p
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, fontSize: 40, color: "#262626", width: 202 }}
         >
-          <img
-            alt=""
-            className="absolute inset-0 size-full object-bottom pointer-events-none"
-            src={imgClockTexture}
-          />
-        </div>
+          10 minutes
+        </p>
+        <p
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 18, color: "#5c5a5a", width: 200 }}
+        >
+          Your Waymo is headed to you now
+        </p>
       </div>
 
-      {/* Clock */}
-      <p
-        className="absolute left-[24px] text-[80px] top-[60px] whitespace-nowrap select-none"
-        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9, background: "linear-gradient(to bottom, #a78bcf, #de7a63)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-      >
-        05
-      </p>
-      <p
-        className="absolute left-[24px] text-[#de7a63] text-[80px] top-[132px] whitespace-nowrap select-none"
-        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9 }}
-      >
-        30
-      </p>
-      <p
-        className="absolute left-[24px] text-[#d14a41] text-[18px] top-[216px] whitespace-nowrap select-none"
-        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1 }}
-      >
-        Sunday, May 10
-      </p>
-
-      {/* Content text — fades in after car arrives */}
-      <motion.div
-        className="absolute flex flex-col gap-[16px] items-start leading-[1.2] left-[23px] top-[336px] w-[368px]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-      >
-        <p
-          className="font-light relative shrink-0 text-[#262626] text-[36px] w-full"
-          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-        >
-          Your reservation at Tasca is in an hour
-        </p>
-        <p
-          className="font-normal relative shrink-0 text-[#5c5a5a] text-[18px] w-full"
-          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-        >
-          I booked a Waymo for you.
-        </p>
-      </motion.div>
-
-      {/* Waymo details card — fades in after car arrives */}
-      <motion.div
-        className="-translate-x-1/2 absolute flex flex-col gap-[24px] items-start left-1/2 p-[32px] rounded-[56px] top-[496px] w-[432px]"
-        style={{ border: "1px solid rgba(255,255,255,0.7)" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.85, duration: 0.5 }}
+      {/* Glass card */}
+      <div
+        className="absolute flex flex-col gap-[32px] items-start left-[23px] pb-[32px] pt-[184px] px-[32px] rounded-[56px]"
+        style={{ top: 437, width: 432, border: "1px solid rgba(255,255,255,0.7)" }}
       >
         <img
           alt=""
@@ -133,70 +115,77 @@ export default function Screen08_WaymoTracking() {
           src={imgGlassTexture}
         />
 
-        <div className="flex flex-col gap-[12px] items-start relative shrink-0 w-full">
-          {/* FARE */}
-          <div className="flex items-center justify-between relative shrink-0 w-full whitespace-nowrap">
-            <p
-              className="leading-[1.2] relative shrink-0 text-[#7a7a7a] text-[16px]"
-              style={{ fontFamily: "'Roboto Mono', monospace", fontWeight: 400 }}
-            >
-              FARE
-            </p>
-            <p
-              className="relative shrink-0 text-[18px]"
-              style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2 }}
-            >
-              <span className="line-through text-[rgba(92,90,90,0.48)]">Uber $19</span>
-              <span className="text-[#5c5a5a]"> $12</span>
-            </p>
-          </div>
-          <div className="h-0 relative shrink-0 w-full">
-            <div className="absolute inset-[-1px_0_0_0]">
-              <img alt="" className="block max-w-none size-full" src={imgLine} />
+        {/* Map section — top of card */}
+        <div
+          className="absolute left-[-1px] top-[-1px] overflow-clip rounded-[56px]"
+          style={{ width: 432, height: 160, border: "1px solid rgba(255,255,255,0.48)" }}
+        >
+          <img alt="" className="absolute inset-0 max-w-none object-cover opacity-80 pointer-events-none rounded-[56px] size-full" src={imgMap} />
+          {/* Purple dot on map */}
+          <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 top-1/2" style={{ width: 28, height: 28 }}>
+            <div className="absolute" style={{ inset: "-25% -39.29% -53.57% -39.29%" }}>
+              <img alt="" className="block max-w-none size-full" src={imgEllipse2} />
             </div>
           </div>
+        </div>
 
-          {/* PICKUP */}
-          <div className="flex items-center justify-between leading-[1.2] relative shrink-0 w-full whitespace-nowrap">
-            <p
-              className="relative shrink-0 text-[#7a7a7a] text-[16px]"
-              style={{ fontFamily: "'Roboto Mono', monospace", fontWeight: 400 }}
-            >
-              PICKUP
-            </p>
-            <p
-              className="relative shrink-0 text-[#5c5a5a] text-[18px]"
-              style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400 }}
-            >
-              6:00 PM
-            </p>
-          </div>
-          <div className="h-0 relative shrink-0 w-full">
-            <div className="absolute inset-[-1px_0_0_0]">
-              <img alt="" className="block max-w-none size-full" src={imgLine} />
+        {/* Vertical line connecting dots — rotated SVG */}
+        <div className="absolute flex items-center justify-center" style={{ left: 43, top: 198, width: 0, height: 82 }}>
+          <div style={{ transform: "rotate(90deg)", flexShrink: 0 }}>
+            <div className="relative" style={{ width: 82, height: 0 }}>
+              <div className="absolute" style={{ inset: "-2px 0" }}>
+                <img alt="" className="block max-w-none size-full" src={imgLine} />
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* DROP-OFF */}
-          <div className="flex items-center justify-between leading-[1.2] relative shrink-0 w-full whitespace-nowrap">
-            <p
-              className="relative shrink-0 text-[#7a7a7a] text-[16px]"
-              style={{ fontFamily: "'Roboto Mono', monospace", fontWeight: 400 }}
-            >
-              DROP-OFF
+        {/* Pick up row */}
+        <div className="flex gap-[16px] items-start relative shrink-0">
+          <div className="relative shrink-0" style={{ width: 24, height: 24 }}>
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse1} />
+          </div>
+          <div className="flex flex-col gap-[8px] items-start justify-center" style={{ lineHeight: 1.2 }}>
+            <p style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 16, color: "rgba(66,66,66,0.64)", width: 201 }}>
+              Pick up
             </p>
-            <p
-              className="relative shrink-0 text-[#5c5a5a] text-[18px]"
-              style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400 }}
-            >
-              6:22 PM
+            <p style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 18, color: "#424242", width: 201 }}>
+              42nd St and Sixth Ave
             </p>
           </div>
         </div>
 
-      </motion.div>
+        {/* Drop-off row */}
+        <div className="flex gap-[16px] items-start relative shrink-0">
+          <div className="relative shrink-0" style={{ width: 24, height: 24 }}>
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse1} />
+          </div>
+          <div className="flex flex-col gap-[8px] items-start justify-center" style={{ lineHeight: 1.2 }}>
+            <p style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 16, color: "rgba(66,66,66,0.64)", width: 201 }}>
+              Drop-off
+            </p>
+            <p style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 18, color: "#424242", width: 201 }}>
+              Tasca Restaurant, NY
+            </p>
+          </div>
+        </div>
 
-      <VoiceButton onClick={() => navigate("/agentic/photos")} />
+        {/* Times — absolute right */}
+        <p
+          className="absolute right-[30px] text-right whitespace-nowrap"
+          style={{ top: 202, fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 20, lineHeight: 1.2, color: "#262626" }}
+        >
+          6:00 PM
+        </p>
+        <p
+          className="absolute right-[31px] text-right whitespace-nowrap"
+          style={{ top: 276, fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, fontSize: 20, lineHeight: 1.2, color: "#262626" }}
+        >
+          6:22 PM
+        </p>
+      </div>
+
+      <VoiceButton demoText="We're on our way to dinner" />
     </div>
   );
 }

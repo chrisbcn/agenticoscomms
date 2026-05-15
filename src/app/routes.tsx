@@ -11,11 +11,14 @@ import Screen04_RestaurantRec from "./pages/agentic/Screen04_RestaurantRec";
 import Screen05_BookingConfirm from "./pages/agentic/Screen05_BookingConfirm";
 import Screen05b_RestaurantOlea from "./pages/agentic/Screen05b_RestaurantOlea";
 import Screen06_FamilyMessages from "./pages/agentic/Screen06_FamilyMessages";
+import ScreenAaron_MessagesAaron from "./pages/agentic/ScreenAaron_MessagesAaron";
+import ScreenMom_MessagesMom from "./pages/agentic/ScreenMom_MessagesMom";
 import Screen07_WaymoBooked from "./pages/agentic/Screen07_WaymoBooked";
 import Screen08_WaymoTracking from "./pages/agentic/Screen08_WaymoTracking";
 import Screen09_PhotoReel from "./pages/agentic/Screen09_PhotoReel";
 import Screen10_SharePrompt from "./pages/agentic/Screen10_SharePrompt";
 import Screen11_Finale from "./pages/agentic/Screen11_Finale";
+import ScreenProcessing from "./pages/agentic/ScreenProcessing";
 
 export const router = createBrowserRouter([
   {
@@ -28,16 +31,19 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Screen02_AgentGreeting },
       { path: "greeting", Component: Screen02_AgentGreeting },
-      { path: "voice", Component: Screen03_VoiceInput },     // Bixby greeting
-      { path: "restaurant", Component: Screen04_RestaurantRec }, // Voice input
-      { path: "booking", Component: Screen05_BookingConfirm },  // Restaurant rec — Tasca
-      { path: "booking-alt", Component: Screen05b_RestaurantOlea }, // Restaurant alt — Olea
-      { path: "messages", Component: Screen06_FamilyMessages },  // Booked
-      { path: "waymo", Component: Screen07_WaymoBooked },    // Reservation confirmed
-      { path: "tracking", Component: Screen08_WaymoTracking },  // Waymo booked
-      { path: "photos", Component: Screen09_PhotoReel },     // Live tracking
-      { path: "share", Component: Screen10_SharePrompt },    // Photo reel
-      { path: "finale", Component: Screen11_Finale },        // Finale
+      { path: "voice", Component: Screen03_VoiceInput },
+      { path: "restaurant", Component: Screen04_RestaurantRec },
+      { path: "booking", Component: Screen05_BookingConfirm },
+      { path: "booking-alt", Component: Screen05b_RestaurantOlea },
+      { path: "messages", Component: Screen06_FamilyMessages },
+      { path: "messages-aaron", Component: ScreenAaron_MessagesAaron },
+      { path: "messages-mom", Component: ScreenMom_MessagesMom },
+      { path: "waymo", Component: Screen07_WaymoBooked },
+      { path: "tracking", Component: Screen08_WaymoTracking },
+      { path: "photos", Component: Screen09_PhotoReel },
+      { path: "share", Component: Screen10_SharePrompt },
+      { path: "finale", Component: Screen11_Finale },
+      { path: "processing", Component: ScreenProcessing },
     ],
   },
   {
