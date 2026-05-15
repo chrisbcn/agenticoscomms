@@ -9,6 +9,7 @@ import Screen02_AgentGreeting from "./pages/agentic/Screen02_AgentGreeting";
 import Screen03_VoiceInput from "./pages/agentic/Screen03_VoiceInput";
 import Screen04_RestaurantRec from "./pages/agentic/Screen04_RestaurantRec";
 import Screen05_BookingConfirm from "./pages/agentic/Screen05_BookingConfirm";
+import Screen05b_RestaurantOlea from "./pages/agentic/Screen05b_RestaurantOlea";
 import Screen06_FamilyMessages from "./pages/agentic/Screen06_FamilyMessages";
 import Screen07_WaymoBooked from "./pages/agentic/Screen07_WaymoBooked";
 import Screen08_WaymoTracking from "./pages/agentic/Screen08_WaymoTracking";
@@ -29,7 +30,8 @@ export const router = createBrowserRouter([
       { path: "greeting", Component: Screen02_AgentGreeting },
       { path: "voice", Component: Screen03_VoiceInput },     // Bixby greeting
       { path: "restaurant", Component: Screen04_RestaurantRec }, // Voice input
-      { path: "booking", Component: Screen05_BookingConfirm },  // Restaurant rec
+      { path: "booking", Component: Screen05_BookingConfirm },  // Restaurant rec — Tasca
+      { path: "booking-alt", Component: Screen05b_RestaurantOlea }, // Restaurant alt — Olea
       { path: "messages", Component: Screen06_FamilyMessages },  // Booked
       { path: "waymo", Component: Screen07_WaymoBooked },    // Reservation confirmed
       { path: "tracking", Component: Screen08_WaymoTracking },  // Waymo booked

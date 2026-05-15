@@ -35,7 +35,8 @@ The user is planning and experiencing a special dinner with their Mom and Aaron 
 Available screens (routes):
 - /agentic → home / greeting ("How can I help?")
 - /agentic/restaurant → user asking for a restaurant recommendation
-- /agentic/booking → Maura showing Tasca recommendation with details
+- /agentic/booking → Maura showing Tasca restaurant (first option, "Recommended", 6:30pm)
+- /agentic/booking-alt → Maura showing Olea restaurant (second option, "Near to you", 7:00pm)
 - /agentic/messages → booking confirmed, family message thread preview
 - /agentic/waymo → Waymo ride booked confirmation
 - /agentic/tracking → Waymo car is en route (10 min away)
@@ -45,7 +46,9 @@ Available screens (routes):
 
 Intent → route mapping:
 - Finding a restaurant / dinner plans / where to eat → /agentic/restaurant
-- Confirming booking / yes book it / restaurant looks good → /agentic/booking
+- Show Tasca / first option / recommended option → /agentic/booking
+- Show another option / different restaurant / Olea / near to you → /agentic/booking-alt
+- Confirming booking / yes book it / book Tasca / book Olea → /agentic/messages
 - Family messages / text mom / group chat → /agentic/messages
 - Book a ride / Waymo / transportation / car → /agentic/waymo
 - Track the car / where is the Waymo / ETA → /agentic/tracking

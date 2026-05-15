@@ -4,11 +4,12 @@ import { VoiceButton } from "../../components/AgenticShared";
 const imgBgOuter = "/agentic-assets/284a94f7cf61bfdbb9bfceebbc6f727384c44aea.png";
 const imgBgInner = "/agentic-assets/82ef667a4677b5058801419e722cfb083b1268f9.png";
 const imgMom = "/agentic-assets/58ce9b58c093882775509f5a54f680857549b19f.png";
-const imgAaron = "/agentic-assets/dfd1786f5e5a8052a4fb42be2ba5b470db4b021b.png";
 const imgUser = "/agentic-assets/f47d24f1011002db3657c4ebc0ad4b61adbac0cc.png";
+const imgAaron = "/agentic-assets/dfd1786f5e5a8052a4fb42be2ba5b470db4b021b.png";
 const imgMic = "/agentic-assets/6672c983de5a780011f8d6a9ff244867b2a9aaa1.svg";
-const imgRestaurant = "/agentic-assets/76c44909f1796697bb0d348b7afd77ac2d779d8e.png";
+const imgRestaurant = "/agentic-assets/1260a7e312c0451a2224aea0630a58f5042a0bc7.png";
 const imgAgent = "/agentic-assets/51f0f8de2ceb5c96556af6e5766a2ee8bc691291.png";
+const imgStar = "/agentic-assets/d88d8585aaaa96f87a98c06fccebc2d27a8e55a9.svg";
 
 export default function Screen05_BookingConfirm() {
   const navigate = useNavigate();
@@ -17,146 +18,132 @@ export default function Screen05_BookingConfirm() {
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
       {/* Outer background */}
       <div className="absolute h-[1040px] left-0 top-0 w-[480px]">
-        <img
-          alt=""
-          className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full"
-          src={imgBgOuter}
-        />
+        <img alt="" className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full" src={imgBgOuter} />
       </div>
 
       {/* Inner content layer */}
       <div className="absolute bg-[#f9f9f9] h-[888px] left-0 overflow-clip rounded-bl-[50px] rounded-br-[50px] top-0 w-[480px]">
         <div className="absolute h-[1040px] left-0 top-[-81px] w-[480px]">
-          <img
-            alt=""
-            className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full"
-            src={imgBgInner}
-          />
+          <img alt="" className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full" src={imgBgInner} />
         </div>
+      </div>
 
-        {/* Background calendar cards (dimmed) */}
-        <div className="absolute bg-white h-[156px] left-[24px] overflow-clip rounded-[40px] shadow-[0px_10px_10px_0px_rgba(164,164,164,0.25)] top-[176px] w-[432px] whitespace-nowrap">
-          <p
-            className="absolute left-[158px] text-[#909090] text-[16px] top-[20px]"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 600, lineHeight: 1 }}
-          >
-            Gym with Layla
-          </p>
-          <p
-            className="absolute left-[171px] text-[#a2a2a2] text-[12px] top-[40px]"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
-          >
-            Sunday 2:30 pm
-          </p>
-        </div>
-        <div className="absolute bg-white h-[156px] left-[24px] overflow-clip rounded-[40px] shadow-[2px_2px_5px_0px_rgba(202,202,202,0.25)] top-[698px] w-[432px] whitespace-nowrap">
-          <p
-            className="absolute left-[122px] text-[#909090] text-[16px] top-[102px]"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 600, lineHeight: 1 }}
-          >
-            Get together at aunt May
-          </p>
-          <p
-            className="absolute left-[168px] text-[#a2a2a2] text-[12px] top-[122px]"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
-          >
-            Sunday 10:00 pm
-          </p>
-        </div>
+      {/* Background calendar card — top (Gym with Layla) */}
+      <div className="absolute bg-white h-[156px] left-[24px] overflow-clip rounded-[40px] top-[176px] w-[432px] whitespace-nowrap"
+        style={{ boxShadow: "0px 10px 10px 0px rgba(164,164,164,0.25)" }}>
+        <p className="absolute left-[158px] text-[#909090] text-[16px] top-[20px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 600, lineHeight: 1 }}>
+          Gym with Layla
+        </p>
+        <p className="absolute left-[171px] text-[#a2a2a2] text-[12px] top-[40px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}>
+          Sunday 2:30 pm
+        </p>
+      </div>
 
-        {/* Main restaurant card */}
-        <div className="absolute bg-white h-[529px] left-[24px] overflow-clip rounded-[40px] shadow-[2px_2px_10px_5px_rgba(164,164,164,0.25)] top-[246px] w-[432px]">
-          {/* Restaurant name and time */}
-          <p
-            className="absolute left-[172px] text-[#262626] text-[32px] top-[28px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 700, lineHeight: 1 }}
-          >
-            Tasca
-          </p>
-          <p
-            className="absolute left-[164px] text-[#4c4c4c] text-[14px] top-[68px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
-          >
-            Sunday 6:30 pm
-          </p>
+      {/* Background calendar card — bottom (Aunt May) */}
+      <div className="absolute bg-white h-[156px] left-[24px] overflow-clip rounded-[40px] top-[698px] w-[432px] whitespace-nowrap"
+        style={{ boxShadow: "2px 2px 5px 0px rgba(202,202,202,0.25)" }}>
+        <p className="absolute left-[122px] text-[#909090] text-[16px] top-[102px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 600, lineHeight: 1 }}>
+          Get together at aunt May
+        </p>
+        <p className="absolute left-[168px] text-[#a2a2a2] text-[12px] top-[122px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}>
+          Sunday 10:00 pm
+        </p>
+      </div>
 
-          {/* Restaurant image */}
-          <div className="absolute h-[208px] left-[20px] overflow-clip rounded-[20px] top-[105px] w-[392px]">
-            <div className="absolute h-[226px] left-0 top-[-9px] w-[392px]">
-              <img
-                alt=""
-                className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full"
-                src={imgRestaurant}
-              />
-            </div>
-            {/* Overlay */}
-            <div
-              className="absolute h-[90px] left-0 overflow-clip top-0 w-[392px]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(-0.785904deg, rgba(0, 0, 0, 0) 2.7614%, rgba(0, 0, 0, 0.8) 97.138%)",
-              }}
-            >
-              <p
-                className="absolute left-[114px] text-[14px] text-white top-[20px] whitespace-nowrap"
-                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2 }}
-              >
-                Mediterranean · Midwood
-              </p>
-            </div>
-            {/* Badges */}
-            <div className="absolute bg-[rgba(255,255,255,0.8)] flex items-center justify-center left-[16px] px-[8px] py-[4px] rounded-[100px] top-[170px]">
-              <p
-                className="text-[#262626] text-[12px] whitespace-nowrap"
-                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2 }}
-              >
-                Step-free entrance
-              </p>
-            </div>
-            <div className="absolute bg-[rgba(255,255,255,0.8)] flex items-center justify-center left-[143px] px-[8px] py-[4px] rounded-[100px] top-[170px]">
-              <p
-                className="text-[#262626] text-[12px] whitespace-nowrap"
-                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2 }}
-              >
-                Halfway for you
-              </p>
-            </div>
+      {/* Main restaurant card — white backing */}
+      <div className="absolute bg-white h-[529px] left-[24px] overflow-clip rounded-[40px] top-[246px] w-[432px] whitespace-nowrap"
+        style={{ boxShadow: "2px 2px 10px 5px rgba(164,164,164,0.25)" }}>
+        <p className="absolute left-[152px] text-[#4c4c4c] text-[14px] top-[28px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}>
+          Available at 6:30 pm
+        </p>
+        <p className="absolute left-[131px] text-[#504a58] text-[24px] top-[53px]"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 700, lineHeight: 1 }}>
+          Recommended
+        </p>
+      </div>
+
+      {/* Photo + info card — overlays the white card */}
+      <div className="absolute h-[428px] left-[24px] overflow-clip rounded-[20px] top-[347px] w-[432px]">
+        {/* Restaurant photo */}
+        <div className="absolute h-[509px] left-[-140px] rounded-tl-[20px] rounded-tr-[20px] top-[-81px] w-[711px]">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-tl-[20px] rounded-tr-[20px]">
+            <img alt="" className="absolute h-[113.72%] left-[-12.12%] max-w-none top-[-13.7%] w-[124.23%]" src={imgRestaurant} />
           </div>
+        </div>
 
-          {/* Agent reasoning */}
-          <div className="absolute left-[48px] rounded-[500px] size-[28px] top-[337px] overflow-hidden">
-            <img
-              alt=""
-              className="absolute h-[144.62%] left-[-47.04%] max-w-none top-[-20%] w-[193.81%]"
-              src={imgAgent}
-            />
+        {/* Photo top gradient overlay with name + carousel dots */}
+        <div className="absolute h-[180px] left-0 overflow-clip rounded-tl-[20px] rounded-tr-[20px] top-0 w-[432px]"
+          style={{ backgroundImage: "linear-gradient(-1.42607deg, rgba(0,0,0,0) 2.7614%, rgb(0,0,0) 97.138%)" }}>
+          {/* Carousel dots */}
+          <div className="absolute flex gap-[8px] items-center left-[199px] top-[14px]">
+            <div className="bg-[rgba(255,255,255,0.8)] rounded-[100px] size-[6px]" />
+            <div className="bg-[rgba(255,255,255,0.4)] rounded-[100px] size-[6px]" />
+            <div className="bg-[rgba(255,255,255,0.4)] rounded-[100px] size-[6px]" />
           </div>
-          <p
-            className="absolute left-[92px] text-[#4c4c4c] text-[14px] top-[337px] w-[292px]"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
-          >
-            Mom mentioned her knee was bothering her in a WhatsApp message last Tuesday. Two of the three options have
-            stairs. I've prioritized the step-free option.
+        </div>
+
+        {/* Restaurant name + cuisine */}
+        <p className="absolute left-[172px] text-[32px] text-white top-[42px] whitespace-nowrap"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 700, lineHeight: 1 }}>
+          Tasca
+        </p>
+        <p className="absolute left-[134px] text-[14px] text-white top-[82px] whitespace-nowrap"
+          style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2 }}>
+          Mediterranean · Midwood
+        </p>
+
+        {/* Dark content panel */}
+        <div className="absolute h-[204px] left-0 overflow-clip rounded-tl-[20px] rounded-tr-[20px] top-[224px] w-[432px]"
+          style={{ backdropFilter: "blur(2px)", background: "rgba(57,38,8,0.75)" }}>
+          {/* Rating row */}
+          <div className="absolute left-[14px] size-[14px] top-[18px]">
+            <img alt="" className="block max-w-none size-full" src={imgStar} />
+          </div>
+          <p className="absolute left-[37px] text-[14px] text-white top-[16px] whitespace-nowrap"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 500, lineHeight: 1.2 }}>
+            4.8
+          </p>
+          <p className="absolute left-[73px] text-[#b4b4b4] text-[14px] top-[16px] whitespace-nowrap"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 500, lineHeight: 1.2 }}>
+            25min
+          </p>
+          <p className="absolute text-[14px] text-right text-white top-[16px] whitespace-nowrap"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400, lineHeight: 1.2, right: 20 }}>
+            505 Columbus Ave, New York, NY 10024
+          </p>
+
+          {/* Agent icon + reasoning */}
+          <div className="absolute left-[28px] rounded-[500px] size-[24px] top-[56px] overflow-hidden">
+            <img alt="" className="absolute h-[144.62%] left-[-47.04%] max-w-none top-[-20%] w-[193.81%]" src={imgAgent} />
+          </div>
+          <p className="absolute left-[66px] text-[14px] text-white top-[56px] w-[300px]"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}>
+            Mom mentioned her knee was bothering her in last Tuesday. Two of the three options have stairs. I've prioritized the step-free option.
           </p>
 
           {/* Action buttons */}
-          <div className="absolute flex gap-[16px] items-center justify-center left-[20px] top-[445px] w-[392px]">
+          <div className="absolute flex gap-[16px] items-center justify-center left-[20px] top-[132px] w-[392px]">
             <button
-              className="bg-[#504a58] flex items-center justify-center overflow-clip px-[24px] py-[20px] rounded-[100px] shrink-0"
+              className="bg-white flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
               onClick={() => navigate("/agentic/messages")}
             >
-              <p
-                className="font-normal leading-[20px] text-[18px] text-white whitespace-nowrap"
-                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-              >
+              <p className="leading-[20px] text-[#504a58] text-[18px] whitespace-nowrap"
+                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400 }}>
                 Book
               </p>
             </button>
-            <button className="bg-[#f4eef6] flex items-center justify-center overflow-clip px-[24px] py-[20px] rounded-[100px] shrink-0">
-              <p
-                className="font-normal leading-[20px] text-[#504a58] text-[18px] whitespace-nowrap"
-                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-              >
+            <button
+              className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
+              style={{ background: "rgba(255,255,255,0.25)" }}
+              onClick={() => navigate("/agentic/booking-alt")}
+            >
+              <p className="leading-[20px] text-[18px] text-white whitespace-nowrap"
+                style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 400 }}>
                 Choose another time
               </p>
             </button>
@@ -166,6 +153,11 @@ export default function Screen05_BookingConfirm() {
 
       {/* Header with avatars */}
       <div className="absolute bg-[rgba(255,255,255,0.75)] h-[152px] left-0 overflow-clip rounded-bl-[50px] rounded-br-[50px] top-0 w-[480px] z-10">
+        <div className="absolute bg-[#f0f0f2] left-[24px] overflow-clip rounded-[100px] size-[56px] top-[72px]">
+          <div className="absolute left-[14px] size-[24px] top-[16px]">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMic} />
+          </div>
+        </div>
         <div className="absolute left-[180px] rounded-[500px] size-[48px] top-[76px] overflow-hidden">
           <img alt="Mom" className="absolute left-[-54.55%] max-w-none size-[206.87%] top-[-22.19%]" src={imgMom} />
         </div>
@@ -174,11 +166,6 @@ export default function Screen05_BookingConfirm() {
         </div>
         <div className="absolute left-[252px] rounded-[500px] h-[47px] w-[48px] top-[77px] overflow-hidden">
           <img alt="Aaron" className="absolute left-[-38.92%] max-w-none size-[181.56%] top-[-5.88%]" src={imgAaron} />
-        </div>
-        <div className="absolute bg-[#f0f0f2] left-[24px] overflow-clip rounded-[100px] size-[56px] top-[72px]">
-          <div className="absolute left-[14px] size-[24px] top-[16px]">
-            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMic} />
-          </div>
         </div>
       </div>
 
