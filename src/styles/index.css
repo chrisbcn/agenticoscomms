@@ -2,7 +2,16 @@
 @import './tailwind.css';
 @import './theme.css';
 
-/* Hide scrollbars */
+/* Hide all scrollbars globally */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
