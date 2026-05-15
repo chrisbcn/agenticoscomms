@@ -11,7 +11,6 @@ const STORY_ORDER = [
   "/agentic/messages-aaron",
   "/agentic/messages-mom",
   "/agentic/waymo",
-  "/agentic/tracking",
   "/agentic/photos",
   "/agentic/finale",
   "/agentic/share",
