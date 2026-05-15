@@ -150,11 +150,7 @@ export function VoiceButton({ onClick, active = false, className = "" }: { onCli
       <button
         onClick={handleClick}
         className="absolute inset-0 overflow-clip rounded-full"
-        style={{
-          background: "white",
-          zIndex: 1,
-          position: "relative",
-        }}
+        style={{ background: "white", zIndex: 1 }}
       >
         <img
           src={ASSETS.voiceDefault}
