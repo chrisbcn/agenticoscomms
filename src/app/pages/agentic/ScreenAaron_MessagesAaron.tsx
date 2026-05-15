@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBg = "/agentic-assets/be22207c5b81f3ba4c374f3f73b8a7f9cd70b3cc.png";
@@ -7,13 +5,6 @@ const imgAgent = "/agentic-assets/51f0f8de2ceb5c96556af6e5766a2ee8bc691291.png";
 const imgAaron = "/agentic-assets/f47d24f1011002db3657c4ebc0ad4b61adbac0cc.png";
 
 export default function ScreenAaron_MessagesAaron() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const t = setTimeout(() => navigate("/agentic/messages-mom"), 2500);
-    return () => clearTimeout(t);
-  }, [navigate]);
-
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
       {/* Background */}
