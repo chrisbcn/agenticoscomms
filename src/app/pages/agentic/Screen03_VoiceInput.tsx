@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
+import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBg = "/agentic-assets/be22207c5b81f3ba4c374f3f73b8a7f9cd70b3cc.png";
 const imgGlassTexture = "/agentic-assets/552ea12888d2f3fc11c5468aa567db6c7535068d.png";
 const imgClockTexture = "/agentic-assets/66d7f2a78e502db6ab429f4d52c6cd398d6d9291.png";
 const imgMomCircle = "/agentic-assets/73b9efb858068e485af35eeb97ba4badf8f35437.png";
-const imgVoice = "/agentic-assets/9eb8e13fcff6e5772ea5d056d1f31510baa20721.png";
 
 export default function Screen03_VoiceInput() {
   const navigate = useNavigate();
@@ -56,6 +56,12 @@ export default function Screen03_VoiceInput() {
 
       {/* Clock */}
       <p
+        className="absolute left-[24px] text-[80px] top-[60px] whitespace-nowrap select-none"
+        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9, background: "linear-gradient(to bottom, #a78bcf, #de7a63)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+      >
+        09
+      </p>
+      <p
         className="absolute left-[24px] text-[#de7a63] text-[80px] top-[132px] whitespace-nowrap select-none"
         style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9 }}
       >
@@ -93,50 +99,7 @@ export default function Screen03_VoiceInput() {
         />
       </div>
 
-      {/* Action buttons */}
-      <div className="absolute flex flex-wrap gap-[13px] items-center left-[20px] top-[765px] w-[436px]">
-        <button
-          className="bg-white flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-          onClick={() => navigate("/agentic/restaurant")}
-        >
-          <p
-            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
-          >
-            Let's plan it
-          </p>
-        </button>
-        <button
-          className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-          style={{ background: "rgba(255,255,255,0.5)" }}
-        >
-          <p
-            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
-          >
-            Remind me later
-          </p>
-        </button>
-        <button
-          className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-          style={{ background: "rgba(255,255,255,0.5)" }}
-        >
-          <p
-            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
-          >
-            Type something...
-          </p>
-        </button>
-      </div>
-
-      {/* Voice button */}
-      <button
-        className="-translate-x-1/2 absolute bg-white overflow-clip rounded-[90px] size-[72px] top-[936px] left-[calc(50%+6px)]"
-        onClick={() => navigate("/agentic/restaurant")}
-      >
-        <img src={imgVoice} alt="Voice" className="absolute inset-0 size-full object-cover pointer-events-none" />
-      </button>
+      <VoiceButton onClick={() => navigate("/agentic/restaurant")} />
     </div>
   );
 }

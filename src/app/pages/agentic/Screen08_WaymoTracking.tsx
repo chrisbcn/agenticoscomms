@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router";
+import { motion } from "motion/react";
+import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBg = "/agentic-assets/be22207c5b81f3ba4c374f3f73b8a7f9cd70b3cc.png";
 const imgClockTexture = "/agentic-assets/66d7f2a78e502db6ab429f4d52c6cd398d6d9291.png";
 const imgGlassTexture = "/agentic-assets/552ea12888d2f3fc11c5468aa567db6c7535068d.png";
 const imgWaymoCar = "/agentic-assets/155ae683fcc0fa0c21233166ea3175eaf7a14d6b.png";
 const imgLine = "/agentic-assets/0d814fe01fe073cf523da305ff2d164b77507f44.svg";
-const imgVoice = "/agentic-assets/dfbc23a26e99b09a2488f9cb15cd58648bc5b695.png";
 
 export default function Screen08_WaymoTracking() {
   const navigate = useNavigate();
@@ -39,8 +40,13 @@ export default function Screen08_WaymoTracking() {
         </div>
       </div>
 
-      {/* Waymo car image */}
-      <div className="absolute h-[270px] left-[188px] top-[90px] w-[448px]">
+      {/* Waymo car image — slides in from right */}
+      <motion.div
+        className="absolute h-[270px] left-[188px] top-[90px] w-[448px]"
+        initial={{ x: 320 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             alt=""
@@ -48,7 +54,7 @@ export default function Screen08_WaymoTracking() {
             src={imgWaymoCar}
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Clock texture */}
       <div
@@ -74,6 +80,12 @@ export default function Screen08_WaymoTracking() {
 
       {/* Clock */}
       <p
+        className="absolute left-[24px] text-[80px] top-[60px] whitespace-nowrap select-none"
+        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9, background: "linear-gradient(to bottom, #a78bcf, #de7a63)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+      >
+        05
+      </p>
+      <p
         className="absolute left-[24px] text-[#de7a63] text-[80px] top-[132px] whitespace-nowrap select-none"
         style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9 }}
       >
@@ -86,8 +98,13 @@ export default function Screen08_WaymoTracking() {
         Sunday, May 10
       </p>
 
-      {/* Content text */}
-      <div className="absolute flex flex-col gap-[16px] items-start leading-[1.2] left-[23px] top-[336px] w-[368px]">
+      {/* Content text — fades in after car arrives */}
+      <motion.div
+        className="absolute flex flex-col gap-[16px] items-start leading-[1.2] left-[23px] top-[336px] w-[368px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
         <p
           className="font-light relative shrink-0 text-[#262626] text-[36px] w-full"
           style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
@@ -100,12 +117,15 @@ export default function Screen08_WaymoTracking() {
         >
           I booked a Waymo for you.
         </p>
-      </div>
+      </motion.div>
 
-      {/* Waymo details card */}
-      <div
+      {/* Waymo details card — fades in after car arrives */}
+      <motion.div
         className="-translate-x-1/2 absolute flex flex-col gap-[24px] items-start left-1/2 p-[32px] rounded-[56px] top-[496px] w-[432px]"
         style={{ border: "1px solid rgba(255,255,255,0.7)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.85, duration: 0.5 }}
       >
         <img
           alt=""
@@ -174,49 +194,9 @@ export default function Screen08_WaymoTracking() {
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="flex flex-wrap gap-[13px] items-center relative shrink-0 w-[368px]">
-          <button
-            className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-            style={{ background: "rgba(255,255,255,0.5)" }}
-          >
-            <p
-              className="font-light leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-              style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-            >
-              Other options
-            </p>
-          </button>
-          <button
-            className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-            style={{ background: "rgba(255,255,255,0.5)" }}
-            onClick={() => navigate("/agentic/photos")}
-          >
-            <p
-              className="font-light leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-              style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif" }}
-            >
-              Track my Waymo
-            </p>
-          </button>
-        </div>
-      </div>
+      </motion.div>
 
-      {/* Voice button */}
-      <div className="absolute flex items-center left-[210px] top-[936px]">
-        <button
-          className="bg-white overflow-clip rounded-[100px] shrink-0 size-[60px]"
-          onClick={() => navigate("/agentic/photos")}
-        >
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <img
-              alt=""
-              className="absolute h-[158.72%] left-[-48.7%] max-w-none top-[-32.82%] w-[191.67%]"
-              src={imgVoice}
-            />
-          </div>
-        </button>
-      </div>
+      <VoiceButton onClick={() => navigate("/agentic/photos")} />
     </div>
   );
 }

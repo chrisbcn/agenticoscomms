@@ -96,15 +96,14 @@ export function ClockDisplay({ hours, minutes, date }: { hours: string; minutes:
   );
 }
 
-// Voice button (default state) - centered near bottom
-export function VoiceButton({ onClick, active = false }: { onClick?: () => void; active?: boolean }) {
+// Voice button — centered near bottom, use on every screen
+export function VoiceButton({ onClick, active = false, className = "" }: { onClick?: () => void; active?: boolean; className?: string }) {
   return (
     <button
       onClick={onClick}
-      className="absolute overflow-clip rounded-[90px] size-[72px]"
+      className={`-translate-x-1/2 absolute overflow-clip rounded-full size-[72px] z-10 ${className}`}
       style={{
         left: "calc(50% + 6px)",
-        transform: "translateX(-50%)",
         top: 936,
         background: "white",
         border: active ? "6px solid rgba(205,133,219,0.7)" : "none",
@@ -114,7 +113,7 @@ export function VoiceButton({ onClick, active = false }: { onClick?: () => void;
       }}
     >
       <img
-        src={active ? ASSETS.voiceDefault : ASSETS.voiceDefault2}
+        src={ASSETS.voiceDefault}
         alt="Voice"
         className="absolute inset-0 size-full object-cover pointer-events-none"
       />

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBg = "/agentic-assets/be22207c5b81f3ba4c374f3f73b8a7f9cd70b3cc.png";
 const imgGlassTexture = "/agentic-assets/552ea12888d2f3fc11c5468aa567db6c7535068d.png";
@@ -9,7 +10,6 @@ const imgFrame502 = "/agentic-assets/d7304c964863691d6aed6b1a427a701906bd08d2.pn
 const imgFrame503 = "/agentic-assets/867156475fc7faaf1b1b8910723b7ab3f7f8d1c4.png";
 const imgFrame504 = "/agentic-assets/257f178049721907e7434a1524818ac674d164d7.png";
 const imgAgent = "/agentic-assets/51f0f8de2ceb5c96556af6e5766a2ee8bc691291.png";
-const imgVoice = "/agentic-assets/dfbc23a26e99b09a2488f9cb15cd58648bc5b695.png";
 
 export default function Screen11_Finale() {
   const navigate = useNavigate();
@@ -58,7 +58,13 @@ export default function Screen11_Finale() {
         </div>
       </div>
 
-      {/* Clock minutes */}
+      {/* Clock hours + minutes */}
+      <p
+        className="absolute left-[24px] text-[80px] top-[60px] whitespace-nowrap select-none"
+        style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9, background: "linear-gradient(to bottom, #a78bcf, #de7a63)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+      >
+        09
+      </p>
       <p
         className="absolute left-[24px] text-[#de7a63] text-[80px] top-[132px] whitespace-nowrap select-none"
         style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 0.9 }}
@@ -138,7 +144,7 @@ export default function Screen11_Finale() {
 
       {/* Heading */}
       <p
-        className="absolute left-[24px] text-[#262626] text-[60px] top-[596px] w-[404px]"
+        className="absolute left-[24px] text-[#262626] text-[60px] top-[596px] whitespace-nowrap"
         style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
       >
         From last night
@@ -169,15 +175,15 @@ export default function Screen11_Finale() {
         </p>
       </div>
 
-      {/* Buttons */}
+      {/* Action buttons */}
       <div className="absolute flex flex-wrap gap-[13px] items-center left-[24px] top-[848px] w-[368px]">
         <button
           className="bg-white flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
           onClick={() => navigate("/agentic")}
         >
           <p
-            className="text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: "20px" }}
+            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
           >
             Send
           </p>
@@ -185,29 +191,18 @@ export default function Screen11_Finale() {
         <button
           className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
           style={{ background: "rgba(255,255,255,0.5)" }}
+          onClick={() => navigate("/agentic/share")}
         >
           <p
-            className="text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: "20px" }}
+            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
           >
             Edit message
           </p>
         </button>
       </div>
 
-      {/* Voice button */}
-      <button
-        className="-translate-x-1/2 absolute bg-white overflow-clip rounded-[90px] size-[72px] top-[936px] left-[calc(50%+6px)]"
-        onClick={() => navigate("/agentic")}
-      >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img
-            alt=""
-            className="absolute h-[158.72%] left-[-48.7%] max-w-none top-[-32.82%] w-[191.67%]"
-            src={imgVoice}
-          />
-        </div>
-      </button>
+      <VoiceButton onClick={() => navigate("/agentic")} />
     </div>
   );
 }

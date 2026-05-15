@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { VoiceButton } from "../../components/AgenticShared";
 
 const imgBgOuter = "/agentic-assets/284a94f7cf61bfdbb9bfceebbc6f727384c44aea.png";
 const imgBgInner = "/agentic-assets/82ef667a4677b5058801419e722cfb083b1268f9.png";
@@ -6,7 +7,6 @@ const imgMom = "/agentic-assets/58ce9b58c093882775509f5a54f680857549b19f.png";
 const imgAaron = "/agentic-assets/dfd1786f5e5a8052a4fb42be2ba5b470db4b021b.png";
 const imgUser = "/agentic-assets/f47d24f1011002db3657c4ebc0ad4b61adbac0cc.png";
 const imgMic = "/agentic-assets/6672c983de5a780011f8d6a9ff244867b2a9aaa1.svg";
-const imgVoice = "/agentic-assets/dfbc23a26e99b09a2488f9cb15cd58648bc5b695.png";
 const imgRestaurant = "/agentic-assets/76c44909f1796697bb0d348b7afd77ac2d779d8e.png";
 const imgAgent = "/agentic-assets/51f0f8de2ceb5c96556af6e5766a2ee8bc691291.png";
 
@@ -182,40 +182,7 @@ export default function Screen05_BookingConfirm() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="absolute flex gap-[12px] items-center left-[24px] top-[936px] z-10">
-        <div className="bg-white overflow-clip rounded-[100px] shrink-0 size-[60px]">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <img
-              alt=""
-              className="absolute h-[158.72%] left-[-48.7%] max-w-none top-[-32.82%] w-[191.67%]"
-              src={imgVoice}
-            />
-          </div>
-        </div>
-        <button
-          className="bg-white flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-          onClick={() => navigate("/agentic/messages")}
-        >
-          <p
-            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
-          >
-            See other options
-          </p>
-        </button>
-        <button
-          className="flex items-center justify-center overflow-clip px-[24px] py-[16px] rounded-[100px] shrink-0"
-          style={{ background: "rgba(255,255,255,0.5)" }}
-        >
-          <p
-            className="leading-[20px] text-[#262626] text-[16px] whitespace-nowrap"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300 }}
-          >
-            Ask mom
-          </p>
-        </button>
-      </div>
+      <VoiceButton onClick={() => navigate("/agentic/messages")} />
     </div>
   );
 }
