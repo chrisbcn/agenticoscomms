@@ -21,6 +21,9 @@ export function useSpeech(): SpeechResult {
   const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
   const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Mirrors interim state so onend can flush it to transcript (Chrome often
+  // doesn't deliver a final result when stop() is called programmatically)
+  const interimRef = useRef("");
 
   const supported =
     typeof window !== "undefined" &&
@@ -55,6 +58,7 @@ export function useSpeech(): SpeechResult {
       }
       if (finalText) setTranscript((prev) => prev + finalText);
       setInterim(interimText);
+      interimRef.current = interimText;
 
       // Reset silence timer on every new speech event
       clearSilenceTimer();
@@ -72,6 +76,11 @@ export function useSpeech(): SpeechResult {
 
     recognition.onend = () => {
       clearSilenceTimer();
+      // Flush any pending interim text that Chrome didn't finalize on stop()
+      if (interimRef.current) {
+        setTranscript((prev) => prev + interimRef.current);
+        interimRef.current = "";
+      }
       setIsListening(false);
       setInterim("");
     };

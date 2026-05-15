@@ -64,6 +64,20 @@ Respond ONLY with valid JSON, no other text:
   "navigateTo": "/agentic/restaurant"
 }`;
 
+// Linear story fallback — used when Claude API is unavailable
+const STORY_NEXT: Record<string, string> = {
+  "/agentic": "/agentic/restaurant",
+  "/agentic/restaurant": "/agentic/booking",
+  "/agentic/booking": "/agentic/messages",
+  "/agentic/booking-alt": "/agentic/messages",
+  "/agentic/messages": "/agentic/waymo",
+  "/agentic/waymo": "/agentic/tracking",
+  "/agentic/tracking": "/agentic/photos",
+  "/agentic/photos": "/agentic/finale",
+  "/agentic/finale": "/agentic/share",
+  "/agentic/share": "/agentic",
+};
+
 async function callClaude(currentPath: string, spokenText: string): Promise<{ reply: string; navigateTo: string }> {
   const response = await fetch("/api/chat", {
     method: "POST",
@@ -115,6 +129,9 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
         })
         .catch((err) => {
           console.error("Maura AI error:", err);
+          // Fallback: advance linearly through the story
+          const fallback = STORY_NEXT[locationRef.current];
+          if (fallback) navigate(fallback);
         })
         .finally(() => {
           setIsProcessing(false);
