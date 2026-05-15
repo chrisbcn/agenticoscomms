@@ -15,11 +15,17 @@ const imgFrame503 = "/agentic-assets/d7304c964863691d6aed6b1a427a701906bd08d2.pn
 const imgFrame504 = "/agentic-assets/867156475fc7faaf1b1b8910723b7ab3f7f8d1c4.png";
 const imgFrame505 = "/agentic-assets/4fa2dc981aa8cbeb284c479c45cdcc8057a49d6c.png";
 
+const DEMO_TEXT = `Send a message with the photos and write "I had such a great time last night. Let's meet soon. Love you both!"`;
+
 export default function Screen10_SharePrompt() {
   const navigate = useNavigate();
   const agent = useAgent();
 
   const liveText = agent.liveText;
+
+  // Two-tone display: if typewriting the demo, show typed portion dark + remainder grey
+  const isDemoTyping = liveText.length > 0 && DEMO_TEXT.startsWith(liveText) && liveText !== DEMO_TEXT;
+  const greyRemainder = isDemoTyping ? DEMO_TEXT.slice(liveText.length) : "";
 
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
@@ -37,7 +43,7 @@ export default function Screen10_SharePrompt() {
         {/* Content area */}
         <div className="absolute flex flex-col gap-[24px] items-start left-[27px] top-[215px] w-[424px]">
           {/* Photo grid */}
-          <div className="flex gap-[8px] overflow-clip relative rounded-[48px] shrink-0 w-full" style={{ height: 227.441 }}>
+          <div className="flex gap-[8px] overflow-clip relative rounded-[48px] shrink-0 w-full" style={{ height: 227 }}>
             {/* Left photo — full height */}
             <div className="flex-1 relative min-w-0">
               <div className="absolute inset-0">
@@ -47,7 +53,7 @@ export default function Screen10_SharePrompt() {
               </div>
             </div>
             {/* Right column — two photos stacked */}
-            <div className="flex flex-1 flex-col gap-[8px] min-w-0" style={{ height: 227.441 }}>
+            <div className="flex flex-1 flex-col gap-[8px] min-w-0" style={{ height: 227 }}>
               <div className="flex-1 relative min-h-0">
                 <div className="absolute inset-0">
                   <div className="absolute bg-[#ede4f8] inset-0" />
@@ -69,20 +75,23 @@ export default function Screen10_SharePrompt() {
             </div>
           </div>
 
-          {/* "How can I help?" — static prompt */}
+          {/* "How can I help?" */}
           <p
-            className="text-[#7b7b7b] text-[28px] w-full"
-            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
+            className="text-[28px] w-full"
+            style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2, color: "#7b7b7b" }}
           >
             How can I help?
           </p>
 
-          {/* Live speech transcript — blank until user speaks */}
+          {/* Transcript — dark typed text + grey remainder (demo) */}
           <p className="w-full" style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", lineHeight: 1.4 }}>
-            <span className="text-[#262626] text-[32px] font-bold">{liveText}</span>
+            <span style={{ color: "#262626", fontSize: 32, fontWeight: 700 }}>{liveText}</span>
+            {greyRemainder && (
+              <span style={{ color: "#b5b5b5", fontSize: 32, fontWeight: 700 }}>{greyRemainder}</span>
+            )}
             {agent.isListening && (
               <motion.span
-                className="text-[#262626] text-[32px] font-bold"
+                style={{ color: "#262626", fontSize: 32, fontWeight: 700 }}
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.5, ease: "steps(1)" }}
               >
@@ -111,7 +120,7 @@ export default function Screen10_SharePrompt() {
         </div>
       </div>
 
-      <VoiceButton active onClick={() => navigate("/agentic/finale")} demoText="Share these photos to Mom and Aaron with a warm message" />
+      <VoiceButton active onClick={() => navigate("/agentic/finale")} demoText={DEMO_TEXT} />
     </div>
   );
 }
