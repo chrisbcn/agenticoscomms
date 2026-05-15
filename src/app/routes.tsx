@@ -5,7 +5,6 @@ import AtelierHome from "./pages/AtelierHome";
 import BrandPage from "./pages/BrandPage";
 import MobileLayout from "./components/MobileLayout";
 import AgenticLayout from "./components/AgenticLayout";
-import Screen01_HomeScreen from "./pages/agentic/Screen01_HomeScreen";
 import Screen02_AgentGreeting from "./pages/agentic/Screen02_AgentGreeting";
 import Screen03_VoiceInput from "./pages/agentic/Screen03_VoiceInput";
 import Screen04_RestaurantRec from "./pages/agentic/Screen04_RestaurantRec";
@@ -26,8 +25,8 @@ export const router = createBrowserRouter([
     path: "/agentic",
     Component: AgenticLayout,
     children: [
-      { index: true, Component: Screen01_HomeScreen },   // Animation
-      { path: "greeting", Component: Screen02_AgentGreeting }, // Default home
+      { index: true, Component: Screen02_AgentGreeting },
+      { path: "greeting", Component: Screen02_AgentGreeting },
       { path: "voice", Component: Screen03_VoiceInput },     // Bixby greeting
       { path: "restaurant", Component: Screen04_RestaurantRec }, // Voice input
       { path: "booking", Component: Screen05_BookingConfirm },  // Restaurant rec
