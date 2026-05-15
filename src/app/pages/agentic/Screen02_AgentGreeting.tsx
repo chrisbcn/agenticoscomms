@@ -104,13 +104,6 @@ export default function Screen02_AgentGreeting() {
         </div>
       </div>
 
-      {/* Voice button */}
-      <button
-        className="-translate-x-1/2 absolute bg-white overflow-clip rounded-[90px] size-[72px] top-[936px] left-[calc(50%+6px)]"
-        onClick={() => navigate("/agentic/voice")}
-      >
-        <img src={imgVoice} alt="Voice" className="absolute inset-0 size-full object-cover pointer-events-none" />
-      </button>
     </div>
   );
 }
