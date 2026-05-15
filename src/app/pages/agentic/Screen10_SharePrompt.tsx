@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
 import { VoiceButton } from "../../components/AgenticShared";
 import { useAgent } from "../../context/AgentContext";
 
@@ -16,46 +15,11 @@ const imgFrame503 = "/agentic-assets/d7304c964863691d6aed6b1a427a701906bd08d2.pn
 const imgFrame504 = "/agentic-assets/867156475fc7faaf1b1b8910723b7ab3f7f8d1c4.png";
 const imgFrame505 = "/agentic-assets/4fa2dc981aa8cbeb284c479c45cdcc8057a49d6c.png";
 
-const HELP_TEXT = "How can I help?";
-const BLACK_TEXT = `Send a message with the photos and write "I had such a great time last night.`;
-const GRAY_TEXT = ` Let's meet soon. Love you both!"`;
-const FULL_TEXT = BLACK_TEXT + GRAY_TEXT;
-const CHAR_SPEED = 28;
-const TRANSCRIPT_PAUSE = 500;
-
 export default function Screen10_SharePrompt() {
   const navigate = useNavigate();
   const agent = useAgent();
-  const [helpTyped, setHelpTyped] = useState(0);
-  const [charsTyped, setCharsTyped] = useState(0);
-  const [transcriptStarted, setTranscriptStarted] = useState(false);
 
-  useEffect(() => {
-    if (helpTyped >= HELP_TEXT.length) return;
-    const t = setTimeout(() => setHelpTyped((n) => n + 1), CHAR_SPEED);
-    return () => clearTimeout(t);
-  }, [helpTyped]);
-
-  useEffect(() => {
-    if (helpTyped < HELP_TEXT.length) return;
-    const delay = setTimeout(() => setTranscriptStarted(true), TRANSCRIPT_PAUSE);
-    return () => clearTimeout(delay);
-  }, [helpTyped]);
-
-  useEffect(() => {
-    if (!transcriptStarted) return;
-    if (charsTyped >= FULL_TEXT.length) return;
-    const t = setTimeout(() => setCharsTyped((n) => n + 1), CHAR_SPEED);
-    return () => clearTimeout(t);
-  }, [transcriptStarted, charsTyped]);
-
-  // Live speech overrides the typewriter
   const liveText = agent.interim || agent.transcript;
-  const showLive = agent.isListening || agent.isProcessing || Boolean(agent.transcript);
-
-  const typed = FULL_TEXT.slice(0, charsTyped);
-  const blackVisible = showLive ? liveText : typed.slice(0, BLACK_TEXT.length);
-  const grayVisible = showLive ? "" : (typed.length > BLACK_TEXT.length ? typed.slice(BLACK_TEXT.length) : "");
 
   return (
     <div className="bg-white overflow-clip relative rounded-[50px] size-full">
@@ -105,25 +69,18 @@ export default function Screen10_SharePrompt() {
             </div>
           </div>
 
-          {/* "How can I help?" — typewriters in */}
+          {/* "How can I help?" — static prompt */}
           <p
             className="text-[#7b7b7b] text-[28px] w-full"
             style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", fontWeight: 300, lineHeight: 1.2 }}
           >
-            {HELP_TEXT.slice(0, helpTyped)}
-            {helpTyped < HELP_TEXT.length && (
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.5, ease: "steps(1)" }}
-              >|</motion.span>
-            )}
+            How can I help?
           </p>
 
-          {/* Typewriter transcript */}
+          {/* Live speech transcript — blank until user speaks */}
           <p className="w-full" style={{ fontFamily: "'One UI Sans APP VF', system-ui, sans-serif", lineHeight: 1.4 }}>
-            <span className="text-[#262626] text-[32px] font-bold">{blackVisible}</span>
-            <span className="text-[#b5b5b5] text-[32px] font-bold">{grayVisible}</span>
-            {charsTyped < FULL_TEXT.length && transcriptStarted && (
+            <span className="text-[#262626] text-[32px] font-bold">{liveText}</span>
+            {agent.isListening && (
               <motion.span
                 className="text-[#262626] text-[32px] font-bold"
                 animate={{ opacity: [1, 0] }}
