@@ -104,21 +104,25 @@ export function VoiceButton({ onClick, active = false, className = "", demoText 
   const agent = useAgent();
   const listening = agent.isListening;
   const processing = agent.isProcessing;
-  const lastClickRef = useRef(0);
+  const pendingClickRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleClick = () => {
-    const now = Date.now();
-    const isDouble = now - lastClickRef.current < 350;
-    lastClickRef.current = now;
-
-    if (isDouble && demoText) {
-      agent.runDemo(demoText);
-      return;
+    if (pendingClickRef.current) {
+      // Second click within window — cancel single-click and run demo
+      clearTimeout(pendingClickRef.current);
+      pendingClickRef.current = null;
+      if (demoText) {
+        agent.runDemo(demoText);
+        return;
+      }
     }
 
-    agent.toggleListening();
-    // onClick kept as fallback when speech not supported
-    if (!agent.supported) onClick?.();
+    // Delay single-click so a double-click can cancel it
+    pendingClickRef.current = setTimeout(() => {
+      pendingClickRef.current = null;
+      agent.toggleListening();
+      if (!agent.supported) onClick?.();
+    }, 280);
   };
 
   return (

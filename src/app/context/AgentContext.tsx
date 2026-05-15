@@ -47,7 +47,7 @@ Available screens (routes):
 - /agentic/share → User editing/speaking the message to send with photos
 
 Intent → route mapping:
-- Finding a restaurant / dinner plans / where to eat → /agentic/restaurant
+- Finding a restaurant / dinner plans / where to eat → /agentic/booking
 - Show Tasca / first option / recommended option → /agentic/booking
 - Show another option / different restaurant / Olea / near to you → /agentic/booking-alt
 - Confirming booking / yes book it / book Tasca / book Olea → /agentic/messages
